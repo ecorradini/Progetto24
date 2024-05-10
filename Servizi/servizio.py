@@ -3,7 +3,7 @@ class Servizio:
     tipo = "servizio"
 
     def __init__(self, codice=None):
-        self.codice = None
+        self.codice = codice
 
     def aggiungi_servizio(self, codice):
         self.codice = codice
