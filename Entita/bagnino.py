@@ -3,7 +3,6 @@ import pickle
 
 from Entita.utilizzatore import Utilizzatore
 
-
 class Bagnino(Utilizzatore):
 
     def __init__(self, id=None, nome=None, cognome=None, cf=None,
