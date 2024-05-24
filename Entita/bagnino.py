@@ -46,6 +46,21 @@ class Bagnino(Utilizzatore):
         info["licenza"] = self.licenza
         return info
 
+    @classmethod
+    def get_instance(cls, bagnino_dict):
+        return Bagnino(
+            bagnino_dict["id"],
+            bagnino_dict["nome"],
+            bagnino_dict["cognome"],
+            bagnino_dict["cf"],
+            bagnino_dict["indirizzo"],
+            bagnino_dict["email"],
+            bagnino_dict["telefono"],
+            bagnino_dict["datanascita"],
+            bagnino_dict["luogonascita"],
+            bagnino_dict["licenza"]
+        )
+
     def _from_dict(self, bagnino_dict):
         return Bagnino(
             bagnino_dict["id"],

@@ -24,7 +24,7 @@
    </property>
    <layout class="QHBoxLayout" name="horizontalLayout">
     <item>
-     <widget class="QListWidget" name="lista_dipendenti"/>
+     <widget class="QListView" name="lista_dipendenti"/>
     </item>
     <item>
      <layout class="QVBoxLayout" name="verticalLayout">

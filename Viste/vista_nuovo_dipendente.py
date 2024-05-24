@@ -9,11 +9,14 @@ from Entita.bagnino import Bagnino
 
 class VistaNuovoDipendente(QWidget):
 
-    def __init__(self, parent=None):
+    def __init__(self, callback, parent=None):
         super(VistaNuovoDipendente, self).__init__(parent)
         uic.loadUi('Viste/vista_nuovo_dipendente.ui', self)
 
+        self.callback = callback
+
         self.bottone_annulla.clicked.connect(self.annulla)
+        self.bottone_conferma.clicked.connect(self.conferma)
 
     def _ottieni_ultimo_id(self):
         lista_bagnini_salvata = []
@@ -43,20 +46,21 @@ class VistaNuovoDipendente(QWidget):
             or luogonascita == "" or licenza == "":
             QMessageBox.critical(self, 'Attenzione!',
                                  "Per favore, inserisci tutti i dati richiesti.",
-                                 QMessageBox.Ok, QMessageBox.Ok)
+                                 QMessageBox.StandardButton.Ok)
         else:
             try:
-                datanascita = datetime.strptime(datanascita, "%d/%m/%y")
+                datanascita = datetime.strptime(datanascita, "%d/%m/%Y")
+                nuovo_bagnino = Bagnino()
+                nuovo_bagnino.aggiungi_bagnino(id=self._ottieni_ultimo_id() + 1,
+                                               nome=nome, cognome=cognome,
+                                               cf=cf, indirizzo=indirizzo,
+                                               email=email, telefono=telefono,
+                                               datanascita=datanascita,
+                                               luogonascita=luogonascita,
+                                               licenza=licenza)
+                self.callback()
+                self.close()
             except:
                 QMessageBox.critical(self, 'Attenzione!',
                                      "Per favore, inserisci la data nel formato dd/MM/yyyy",
-                                     QMessageBox.Ok, QMessageBox.Ok)
-            nuovo_bagnino = Bagnino()
-            nuovo_bagnino.aggiungi_bagnino(id=self._ottieni_ultimo_id()+1,
-                                           nome=nome, cognome=cognome,
-                                           cf=cf, indirizzo=indirizzo,
-                                           email=email, telefono=telefono,
-                                           datanascita=datanascita,
-                                           luogonascita=luogonascita,
-                                           licenza=licenza)
-            self.close()
+                                     QMessageBox.StandardButton.Ok)
